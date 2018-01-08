@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import cv2
 import numpy as np
@@ -18,8 +19,13 @@ def get_screenshot(id):
 
 def jump(distance):
     # 这个参数还需要针对屏幕分辨率进行优化
+    # 按压点随机在屏幕右下角，防止被ban
+
+    tap_x = np.random.uniform(700, 800)
+    tap_y = np.random.uniform(1000, 1400)
+
     press_time = int(distance * 1.35)
-    cmd = 'adb shell input swipe 320 410 320 410 ' + str(press_time)
+    cmd = 'adb shell input swipe '+ str(tap_x) + ' ' + str(tap_y) + ' ' +  str(tap_x) + ' ' +  str(tap_y) + ' ' + str(press_time)
     os.system(cmd)
 
 
@@ -96,4 +102,4 @@ for i in range(10000):
     distance = (center1_loc[0] - x_center) ** 2 + (center1_loc[1] - y_center) ** 2
     distance = distance ** 0.5
     jump(distance)
-    time.sleep(1.3)
+    time.sleep(1.5)
